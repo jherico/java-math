@@ -6,13 +6,9 @@ import org.junit.Test;
 
 public class Matrix4fTest {
 
-  public static void assertNearlyEquals(Vector4f a, Vector4f b) {
-    assertTrue(a.equalsEpsilon(b, 0.00001f));
-  }
-  
   public static void assertMatrixOperation(Matrix4f m, Vector4f original, Vector4f expected) {
     Vector4f result = m.mult(original);
-    assertNearlyEquals(result, expected);
+    assertTrue(result.equalsEpsilon(expected));
   }
 
   @Test

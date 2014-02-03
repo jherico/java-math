@@ -31,7 +31,6 @@
  */
 package org.saintandreas.math;
 
-import java.util.logging.Logger;
 
 /**
  * <code>Matrix3f</code> defines a 3x3 matrix. Matrix data is maintained
@@ -43,11 +42,7 @@ import java.util.logging.Logger;
  * @author Joshua Slack
  */
 public final class Matrix3f implements java.io.Serializable {
-
   static final long serialVersionUID = 1;
-
-  private static final Logger logger = Logger.getLogger(Matrix3f.class
-      .getName());
   protected final float m00, m01, m02;
   protected final float m10, m11, m12;
   protected final float m20, m21, m22;
@@ -238,8 +233,6 @@ public final class Matrix3f implements java.io.Serializable {
         return m22;
       }
     }
-
-    logger.warning("Invalid matrix index.");
     throw new IllegalArgumentException("Invalid indices into matrix.");
   }
 
@@ -334,7 +327,6 @@ public final class Matrix3f implements java.io.Serializable {
       vz = m22;
       break;
     default:
-      logger.warning("Invalid column index.");
       throw new IllegalArgumentException("Invalid column index. " + i);
     }
     return new Vector3f(vx, vy, vz);
@@ -367,7 +359,6 @@ public final class Matrix3f implements java.io.Serializable {
       vz = m22;
       break;
     default:
-      logger.warning("Invalid row index.");
       throw new IllegalArgumentException("Invalid row index. " + i);
     }
     return new Vector3f(vx, vy, vz);
@@ -416,29 +407,9 @@ public final class Matrix3f implements java.io.Serializable {
    * @return the result matrix.
    */
   public Matrix3f mult(Matrix3f mat) {
-    return mult(mat, null);
-  }
-
-  /**
-   * <code>mult</code> multiplies this matrix by a given matrix. The result
-   * matrix is returned as a new object.
-   * 
-   * @param mat
-   *          the matrix to multiply this matrix by.
-   * @param product
-   *          the matrix to store the result in. if null, a new matrix3f is
-   *          created. It is safe for mat and product to be the same object.
-   * @return a matrix3f object containing the result of this operation
-   */
-  public Matrix3f mult(Matrix3f mat, Matrix3f product) {
-
     float temp00, temp01, temp02;
     float temp10, temp11, temp12;
     float temp20, temp21, temp22;
-
-    if (product == null) {
-      product = new Matrix3f();
-    }
     temp00 = m00 * mat.m00 + m01 * mat.m10 + m02 * mat.m20;
     temp01 = m00 * mat.m01 + m01 * mat.m11 + m02 * mat.m21;
     temp02 = m00 * mat.m02 + m01 * mat.m12 + m02 * mat.m22;

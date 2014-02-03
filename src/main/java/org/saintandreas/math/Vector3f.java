@@ -135,21 +135,6 @@ public final class Vector3f extends Vector<Vector3f> implements java.io.Serializ
     }
 
     /**
-     * <code>hashCode</code> returns a unique code for this vector object based
-     * on it's values. If two vectors are logically equivalent, they will return
-     * the same hash code value.
-     * @return the hash code value of this vector.
-     */
-    @Override
-    public int hashCode() {
-        int hash = 37;
-        hash += 37 * hash + Float.floatToIntBits(x);
-        hash += 37 * hash + Float.floatToIntBits(y);
-        hash += 37 * hash + Float.floatToIntBits(z);
-        return hash;
-    }
-
-    /**
      * <code>toString</code> returns the string representation of this vector.
      * The format is:
      *
@@ -160,35 +145,6 @@ public final class Vector3f extends Vector<Vector3f> implements java.io.Serializ
     @Override
     public String toString() {
         return "(" + x + ", " + y + ", " + z + ")";
-    }
-
-    /**
-     *
-     * <code>add</code> adds a provided vector to this vector creating a
-     * resultant vector which is returned. If the provided vector is null, null
-     * is returned.
-     *
-     * @param vec
-     *            the vector to add to this.
-     * @return the resultant vector.
-     */
-    @Override
-    public Vector3f add(@Nonnull Vector3f vec) {
-        return new Vector3f(x + vec.x, y + vec.y, z + vec.z);
-    }
-
-    /**
-     *
-     * <code>dot</code> calculates the dot product of this vector with a
-     * provided vector. If the provided vector is null, 0 is returned.
-     *
-     * @param v
-     *            the vector to dot with this vector.
-     * @return the resultant dot product of this vector and a given vector.
-     */
-    @Override
-    public float dot(@Nonnull Vector3f v) {
-        return x * v.x + y * v.y + z * v.z;
     }
 
     /**
@@ -207,90 +163,6 @@ public final class Vector3f extends Vector<Vector3f> implements java.io.Serializ
     }
 
     /**
-     * <code>lengthSquared</code> calculates the squared value of the
-     * magnitude of the vector.
-     *
-     * @return the magnitude squared of the vector.
-     */
-    @Override
-    public float lengthSquared() {
-        return x * x + y * y + z * z;
-    }
-
-    /**
-     * <code>distanceSquared</code> calculates the distance squared between
-     * this vector and vector v.
-     *
-     * @param v the second vector to determine the distance squared.
-     * @return the distance squared between the two vectors.
-     */
-    @Override
-    public float distanceSquared(@Nonnull Vector3f v) {
-        double dx = x - v.x;
-        double dy = y - v.y;
-        double dz = z - v.z;
-        return (float) (dx * dx + dy * dy + dz * dz);
-    }
-
-    /**
-     *
-     * <code>mult</code> multiplies this vector by a scalar. The resultant
-     * vector is returned.
-     *
-     * @param scalar
-     *            the value to multiply this vector by.
-     * @return the new vector.
-     */
-    @Override
-    public Vector3f mult(float scalar) {
-        return new Vector3f(x * scalar, y * scalar, z * scalar);
-    }
-
-    /**
-     * multiplies a provided vector to this vector
-     * internally, 
-     *
-     * @param v
-     *            the vector to mult to this vector.
-     * @return this
-     */
-    @Override
-    public Vector3f mult(@Nonnull Vector3f v) {
-      return new Vector3f(x * v.x, y * v.y, z * v.z);
-    }
-
-
-    /**
-     * <code>maxLocal</code> computes the maximum value for each 
-     * component in this and <code>other</code> vector. The result is stored
-     * in this vector.
-     * @param other 
-     */
-    @Override
-    public Vector3f max(Vector3f other){
-      return new Vector3f(
-          Math.max(other.x, x),
-          Math.max(other.y, y),
-          Math.max(other.z, z)
-        );
-    }
-
-    /**
-     * <code>minLocal</code> computes the minimum value for each
-     * component in this and <code>other</code> vector. The result is stored
-     * in this vector.
-     * @param other
-     */
-    @Override
-    public Vector3f min(Vector3f other){
-      return new Vector3f(
-          Math.min(other.x, x),
-          Math.min(other.y, y),
-          Math.min(other.z, z)
-        );
-    }
-
-    /**
      * <code>angleBetween</code> returns (in radians) the angle between two vectors.
      * It is assumed that both this vector and the given vector are unit vectors (iow, normalized).
      * 
@@ -302,50 +174,6 @@ public final class Vector3f extends Vector<Vector3f> implements java.io.Serializ
         float dotProduct = dot(otherVector);
         float angle = FastMath.acos(dotProduct);
         return angle;
-    }
-    
-    /**
-     * Sets this vector to the interpolation by changeAmnt from this to the finalVec
-     * this=(1-changeAmnt)*this + changeAmnt * finalVec
-     * @param finalVec The final vector to interpolate towards
-     * @param changeAmnt An amount between 0.0 - 1.0 representing a precentage
-     *  change from this towards finalVec
-     */
-    @Override
-    public Vector3f interpolate(Vector3f finalVec, float changeAmnt) {
-      return new Vector3f(
-          (1f-changeAmnt)*this.x + changeAmnt*finalVec.x,
-          (1f-changeAmnt)*this.y + changeAmnt*finalVec.y,
-          (1f-changeAmnt)*this.z + changeAmnt*finalVec.z);
-    }
-
-    /**
-     * Sets this vector to the interpolation by changeAmnt from beginVec to finalVec
-     * this=(1-changeAmnt)*beginVec + changeAmnt * finalVec
-     * @param beginVec the beging vector (changeAmnt=0)
-     * @param finalVec The final vector to interpolate towards
-     * @param changeAmnt An amount between 0.0 - 1.0 representing a precentage
-     *  change from beginVec towards finalVec
-     */
-    public static Vector3f interpolate(Vector3f beginVec,Vector3f finalVec, float changeAmnt) {
-      return beginVec.interpolate(finalVec, changeAmnt);
-    }
-
-    /**
-     * Check a vector... if it is null or its floats are NaN or infinite,
-     * return false.  Else return true.
-     * @param vector the vector to check
-     * @return true or false as stated above.
-     */
-    @Override
-    public boolean isValid() {
-      if (Float.isNaN(x) ||
-          Float.isNaN(y) ||
-          Float.isNaN(z)) return false;
-      if (Float.isInfinite(x) ||
-          Float.isInfinite(y) ||
-          Float.isInfinite(z)) return false;
-      return true;
     }
 
     /*
@@ -434,14 +262,7 @@ public final class Vector3f extends Vector<Vector3f> implements java.io.Serializ
     }
 
     @Override
-    public Vector3f inverse() {
-      return new Vector3f(1f / x, 1f/ y, 1f/z);
+    protected Vector3f build(float[] v) {
+      return new Vector3f(v[0], v[1], v[2]);
     }
-
-    @Override
-    public boolean equalsEpsilon(Vector3f v, float epsilon) {
-      // TODO Auto-generated method stub
-      return false;
-    }
-
 }

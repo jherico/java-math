@@ -502,19 +502,6 @@ public final class Quaternion extends Vector4<Quaternion> implements java.io.Ser
   }
 
   /**
-   * <code>add</code> adds the values of this quaternion to those of the
-   * parameter quaternion. The result is returned as a new quaternion.
-   * 
-   * @param q
-   *          the quaternion to add to this.
-   * @return the new quaternion.
-   */
-  @Override
-  public Quaternion add(Quaternion q) {
-    return new Quaternion(x + q.x, y + q.y, z + q.z, w + q.w);
-  }
-
-  /**
    * <code>mult</code> multiplies this quaternion by a parameter quaternion. The
    * result is returned as a new quaternion. It should be noted that quaternion
    * multiplication is not commutative so q * p != p * q.
@@ -648,6 +635,11 @@ public final class Quaternion extends Vector4<Quaternion> implements java.io.Ser
   @Override
   protected Quaternion build(float x, float y, float z, float w) {
     return new Quaternion(x, y, z, w);
+  }
+
+  @Override
+  protected Quaternion build(float[] v) {
+    return new Quaternion(v[0], v[1], v[2], v[3]);
   }
 
 }

@@ -82,21 +82,6 @@ public final class Vector2f extends Vector<Vector2f> implements java.io.Serializ
   }
 
   /**
-   * <code>hashCode</code> returns a unique code for this vector object based on
-   * it's values. If two vectors are logically equivalent, they will return the
-   * same hash code value.
-   * 
-   * @return the hash code value of this vector.
-   */
-  @Override
-  public int hashCode() {
-    int hash = 37;
-    hash += 37 * hash + Float.floatToIntBits(x);
-    hash += 37 * hash + Float.floatToIntBits(y);
-    return hash;
-  }
-
-  /**
    * <code>toString</code> returns the string representation of this vector
    * object. The format of the string is such: com.jme.math.Vector2f [X=XX.XXXX,
    * Y=YY.YYYY]
@@ -134,32 +119,6 @@ public final class Vector2f extends Vector<Vector2f> implements java.io.Serializ
   }
 
   /**
-   * <code>add</code> adds a provided vector to this vector creating a resultant
-   * vector which is returned. If the provided vector is null, null is returned.
-   * 
-   * @param vec
-   *          the vector to add to this.
-   * @return the resultant vector.
-   */
-  @Override
-  public Vector2f add(@Nonnull Vector2f vec) {
-    return new Vector2f(x + vec.x, y + vec.y);
-  }
-
-  /**
-   * <code>dot</code> calculates the dot product of this vector with a provided
-   * vector.
-   * 
-   * @param vec
-   *          the vector to dot with this vector.
-   * @return the resultant dot product of this vector and a given vector.
-   */
-  @Override
-  public float dot(@Nonnull Vector2f vec) {
-    return x * vec.x + y * vec.y;
-  }
-
-  /**
    * <code>cross</code> calculates the cross product of this vector with a
    * parameter vector v.
    * 
@@ -173,22 +132,6 @@ public final class Vector2f extends Vector<Vector2f> implements java.io.Serializ
 
   public float determinant(@Nonnull Vector2f v) {
     return (x * v.y) - (y * v.x);
-  }
-
-  /**
-   * Sets this vector to the interpolation by changeAmnt from this to the
-   * finalVec this=(1-changeAmnt)*this + changeAmnt * finalVec
-   * 
-   * @param finalVec
-   *          The final vector to interpolate towards
-   * @param changeAmnt
-   *          An amount between 0.0 - 1.0 representing a percentage change from
-   *          this towards finalVec
-   */
-  @Override
-  public Vector2f interpolate(@Nonnull Vector2f finalVec, float changeAmnt) {
-    return new Vector2f((1 - changeAmnt) * this.x + changeAmnt * finalVec.x,
-        (1 - changeAmnt) * this.y + changeAmnt * finalVec.y);
   }
 
   /**
@@ -208,49 +151,6 @@ public final class Vector2f extends Vector<Vector2f> implements java.io.Serializ
     return beginVec.interpolate(finalVec, changeAmnt);
   }
 
-  /**
-   * <code>lengthSquared</code> calculates the squared value of the magnitude of
-   * the vector.
-   * 
-   * @return the magnitude squared of the vector.
-   */
-  @Override
-  public float lengthSquared() {
-    return x * x + y * y;
-  }
-
-  /**
-   * <code>distanceSquared</code> calculates the distance squared between this
-   * vector and vector v.
-   * 
-   * @param v
-   *          the second vector to determine the distance squared.
-   * @return the distance squared between the two vectors.
-   */
-  @Override
-  public float distanceSquared(Vector2f v) {
-    double dx = x - v.x;
-    double dy = y - v.y;
-    return (float) (dx * dx + dy * dy);
-  }
-
-  /**
-   * <code>mult</code> multiplies this vector by a scalar. The resultant vector
-   * is returned.
-   * 
-   * @param scalar
-   *          the value to multiply this vector by.
-   * @return the new vector.
-   */
-  @Override
-  public Vector2f mult(float scalar) {
-    return new Vector2f(x * scalar, y * scalar);
-  }
-
-  @Override
-  public Vector2f mult(Vector2f v) {
-    return new Vector2f(x * v.x, y * v.y);
-  }
 
   /**
    * <code>smallestAngleBetween</code> returns (in radians) the minimum angle
@@ -309,49 +209,8 @@ public final class Vector2f extends Vector<Vector2f> implements java.io.Serializ
     return new float[] { x, y };
   }
 
-
-  /**
-   * are these two vectors almost the same? they both have the same x and y
-   * values (within epsilon).
-   * 
-   * @param o
-   *          the object to compare for equality
-   * @return true if they are equal
-   */
   @Override
-  public boolean equalsEpsilon(Vector2f v, float epsilon) {
-    return FastMath.isWithinEpsilon(x, v.x, epsilon)
-        && FastMath.isWithinEpsilon(y, v.y, epsilon);
+  protected Vector2f build(float[] v) {
+    return new Vector2f(v[0], v[1]);
   }
-
-  @Override
-  public Vector2f inverse() {
-    return new Vector2f(1f / x, 1f / y);
-  }
-
-  @Override
-  public boolean isValid() {
-    if (Float.isNaN(x) || Float.isNaN(y))
-      return false;
-    if (Float.isInfinite(x) || Float.isInfinite(y))
-      return false;
-    return true;
-  }
-
-  @Override
-  public Vector2f max(Vector2f v) {
-    return new Vector2f(
-        Math.max(x, v.x),
-        Math.max(y, v.y)
-      );
-  }
-
-  @Override
-  public Vector2f min(Vector2f v) {
-    return new Vector2f(
-        Math.min(x, v.x),
-        Math.min(y, v.y)
-      );
-  }
-
 }

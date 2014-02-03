@@ -51,6 +51,10 @@ final public class FastMath {
     /** A "close to zero" float epsilon value for use*/
     public static final float ZERO_TOLERANCE = 0.0001f;
     public static final float ONE_THIRD = 1f / 3f;
+    public static final float TAU = (float) (Math.PI * 2.0);
+    public static final float HALF_TAU = (float) Math.PI;
+    public static final float QUARTER_TAU = (float) (Math.PI / 2.0);
+    public static final float INVERSE_TAU = (float) (1.0 / Math.PI);
     /** The value PI as a float. (180 degrees) */
     public static final float PI = (float) Math.PI;
     /** The value 2PI as a float. (360 degrees) */

@@ -112,22 +112,6 @@ public abstract class Vector4<ResultType extends Vector4<ResultType>> extends Ve
     }
 
     /**
-     * <code>hashCode</code> returns a unique code for this vector object based
-     * on it's values. If two vectors are logically equivalent, they will return
-     * the same hash code value.
-     * @return the hash code value of this vector.
-     */
-    @Override
-    public final int hashCode() {
-        int hash = 37;
-        hash += 37 * hash + Float.floatToIntBits(x);
-        hash += 37 * hash + Float.floatToIntBits(y);
-        hash += 37 * hash + Float.floatToIntBits(z);
-        hash += 37 * hash + Float.floatToIntBits(w);
-        return hash;
-    }
-
-    /**
      * <code>toString</code> returns the string representation of this vector.
      * The format is:
      *
@@ -155,61 +139,6 @@ public abstract class Vector4<ResultType extends Vector4<ResultType>> extends Ve
     public final float getW() {
         return w;
     }
-    
-    /**
-    *
-    * <code>mult</code> multiplies this vector by a scalar. The resultant
-    * vector is returned.
-    *
-    * @param scalar
-    *            the value to multiply this vector by.
-    * @return the new vector.
-    */
-   @Override
-   public final ResultType mult(float scalar) {
-       return build(x * scalar, y * scalar, z * scalar, w * scalar);
-   }
-    
-    /**
-     *
-     * <code>dot</code> calculates the dot product of this vector with a
-     * provided vector. If the provided vector is null, 0 is returned.
-     *
-     * @param vec
-     *            the vector to dot with this vector.
-     * @return the resultant dot product of this vector and a given vector.
-     */
-    @Override
-    public final float dot(ResultType vec) {
-        return x * vec.x + y * vec.y + z * vec.z + w * vec.w;
-    }
-
-    /**
-     * <code>lengthSquared</code> calculates the squared value of the
-     * magnitude of the vector.
-     *
-     * @return the magnitude squared of the vector.
-     */
-    @Override
-    public final float lengthSquared() {
-        return x * x + y * y + z * z + w * w;
-    }
-
-    /**
-     * <code>distanceSquared</code> calculates the distance squared between
-     * this vector and vector v.
-     *
-     * @param v the second vector to determine the distance squared.
-     * @return the distance squared between the two vectors.
-     */
-    @Override
-    public final float distanceSquared(ResultType v) {
-        double dx = x - v.x;
-        double dy = y - v.y;
-        double dz = z - v.z;
-        double dw = w - v.w;
-        return (float) (dx * dx + dy * dy + dz * dz + dw * dw);
-    }
 
     /**
      * <code>angleBetween</code> returns (in radians) the angle between two vectors.
@@ -227,41 +156,6 @@ public abstract class Vector4<ResultType extends Vector4<ResultType>> extends Ve
     
 
     /**
-     * Sets this vector to the interpolation by changeAmnt from this to the finalVec
-     * this=(1-changeAmnt)*this + changeAmnt * finalVec
-     * @param finalVec The final vector to interpolate towards
-     * @param changeAmnt An amount between 0.0 - 1.0 representing a precentage
-     *  change from this towards finalVec
-     */
-    @Override
-    public final ResultType interpolate(ResultType finalVec, float changeAmnt) {
-      return build(
-          (1f-changeAmnt)*this.x + changeAmnt*finalVec.x,
-          (1f-changeAmnt)*this.y + changeAmnt*finalVec.y,
-          (1f-changeAmnt)*this.z + changeAmnt*finalVec.z,
-          (1f-changeAmnt)*this.w + changeAmnt*finalVec.w);
-    }
-
-    /**
-     * Check a vector... if it is null or its floats are NaN or infinite,
-     * return false.  Else return true.
-     * @param vector the vector to check
-     * @return true or false as stated above.
-     */
-    @Override
-    public final boolean isValid() {
-      if (Float.isNaN(x) ||
-          Float.isNaN(y) ||
-          Float.isNaN(z)||
-          Float.isNaN(w)) return false;
-      if (Float.isInfinite(x) ||
-          Float.isInfinite(y) ||
-          Float.isInfinite(z) ||
-          Float.isInfinite(w)) return false;
-      return true;
-    }
-
-    /**
      * Saves this Vector3f into the given float[] object.
      *
      * @param floats
@@ -273,25 +167,6 @@ public abstract class Vector4<ResultType extends Vector4<ResultType>> extends Ve
     public final float[] toArray() {
       return new float[] { x, y, z, w };
     }
-
-    /**
-     * are these two vectors the same? they are is they both have the same x,y,
-     * and z values.
-     *
-     * @param o
-     *            the object to compare for equality
-     * @return true if they are equal
-     */
-    @Override
-    public final boolean equalsEpsilon(ResultType v, float episilon) {
-      if (Math.abs(v.x - x) > episilon) return false;
-      if (Math.abs(v.y - y) > episilon) return false;
-      if (Math.abs(v.z - z) > episilon) return false;
-      if (Math.abs(v.w - w) > episilon) return false;
-      return true;
-    }
-
-    
 
     /**
      * @param index
@@ -314,35 +189,9 @@ public abstract class Vector4<ResultType extends Vector4<ResultType>> extends Ve
         throw new IllegalArgumentException("index must be either 0, 1, 2 or 3");
     }
 
-    /**
-     * <code>maxLocal</code> computes the maximum value for each
-     * component in this and <code>other</code> vector. The result is stored
-     * in this vector.
-     * @param other
-     */
     @Override
-    public final ResultType max(ResultType other){
-      return build(
-          Math.max(other.x, x),
-          Math.max(other.y, y),
-          Math.max(other.z, z),
-          Math.max(other.w, w)
-        );
+    protected ResultType build(float[] v) {
+      return build(v[0], v[1], v[2], v[3]);
     }
-
-    /**
-     * <code>minLocal</code> computes the minimum value for each
-     * component in this and <code>other</code> vector. The result is stored
-     * in this vector.
-     * @param other
-     */
-    @Override
-    public final ResultType min(ResultType other){
-      return build(
-          Math.min(other.x, x),
-          Math.min(other.y, y),
-          Math.min(other.z, z),
-          Math.min(other.w, w)
-        );
-    }    
+    
 }

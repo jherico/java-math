@@ -140,53 +140,6 @@ public final class Vector4f extends Vector4<Vector4f> implements java.io.Seriali
       super(v.x, v.y, v.z, 1);
     }
 
-    /**
-     *
-     * <code>add</code> adds a provided vector to this vector creating a
-     * resultant vector which is returned. If the provided vector is null, null
-     * is returned.
-     *
-     * @param vec
-     *            the vector to add to this.
-     * @return the resultant vector.
-     */
-    @Override
-    public Vector4f add(Vector4f vec) {
-        return new Vector4f(x + vec.x, y + vec.y, z + vec.z, w + vec.w);
-    }
-
-    /**
-     * <code>multLocal</code> multiplies a provided vector to this vector
-     * internally, and returns a handle to this vector for easy chaining of
-     * calls. If the provided vector is null, null is returned.
-     *
-     * @param vec
-     *            the vector to mult to this vector.
-     * @return this
-     */
-    @Override
-    public Vector4f mult(Vector4f vec) {
-      return new Vector4f(x * vec.x, y * vec.y, z * vec.z, w * vec.w);
-    }
-
-
-    /**
-     * Sets this vector to the interpolation by changeAmnt from beginVec to finalVec
-     * this=(1-changeAmnt)*beginVec + changeAmnt * finalVec
-     * @param beginVec the beging vector (changeAmnt=0)
-     * @param finalVec The final vector to interpolate towards
-     * @param changeAmnt An amount between 0.0 - 1.0 representing a precentage
-     *  change from beginVec towards finalVec
-     */
-    public static Vector4f interpolate(Vector4f beginVec,Vector4f finalVec, float changeAmnt) {
-      return beginVec.interpolate(finalVec, changeAmnt);
-    }
-
-    @Override
-    public Vector4f inverse() {
-      return new Vector4f(1f / x, 1f /y, 1f/z, 1f/w);
-    }
-
     @Override
     protected Vector4f build(float x, float y, float z, float w) {
       return new Vector4f(x,y,z,w);

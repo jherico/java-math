@@ -33,7 +33,6 @@ package org.saintandreas.math;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
-import java.util.logging.Logger;
 
 /**
  * <code>Matrix4f</code> defines and maintains a 4x4 matrix in row major order.
@@ -54,9 +53,6 @@ import java.util.logging.Logger;
 public final class Matrix4f implements java.io.Serializable {
 
   static final long serialVersionUID = 1;
-
-  private static final Logger logger = Logger.getLogger(Matrix4f.class
-      .getName());
   public final float m00, m01, m02, m03;
   public final float m10, m11, m12, m13;
   public final float m20, m21, m22, m23;
@@ -276,8 +272,6 @@ public final class Matrix4f implements java.io.Serializable {
         return m33;
       }
     }
-
-    logger.warning("Invalid matrix index.");
     throw new IllegalArgumentException("Invalid indices into matrix.");
   }
 
@@ -334,7 +328,6 @@ public final class Matrix4f implements java.io.Serializable {
       store[3] = m33;
       break;
     default:
-      logger.warning("Invalid column index.");
       throw new IllegalArgumentException("Invalid column index. " + i);
     }
     return store;

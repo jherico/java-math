@@ -11,62 +11,11 @@ public abstract class Vector<ResultType extends Vector<ResultType>> {
     return (ResultType) this;
   }
 
-  /**
-   * <code>lengthSquared</code> calculates the squared value of the magnitude of
-   * the vector.
-   * 
-   * @return the magnitude squared of the vector.
-   */
-  public abstract float lengthSquared();
-
-  public abstract ResultType add(@Nonnull ResultType v);
-
-  public abstract ResultType mult(float scalar);
-
-  public abstract ResultType mult(@Nonnull ResultType scalar);
-  
-  public abstract float dot(@Nonnull ResultType v);
-
-  public abstract ResultType interpolate(@Nonnull ResultType v,
-      float changeAmnt);
-
-  public abstract ResultType inverse();
-
-  public abstract float distanceSquared(@Nonnull ResultType v);
-  
-  
-  public abstract float angleBetween(@Nonnull ResultType v);
+  protected abstract ResultType build(float[] v);
 
   public abstract float[] toArray();
 
-  public abstract boolean isValid();
-
-  /**
-   * <code>maxLocal</code> computes the maximum value for each 
-   * component in this and <code>other</code> vector. The result is stored
-   * in this vector.
-   * @param other 
-   */
-  public abstract ResultType max(@Nonnull ResultType v);
-
-  /**
-   * <code>minLocal</code> computes the minimum value for each
-   * component in this and <code>other</code> vector. The result is stored
-   * in this vector.
-   * @param other
-   */
-  public abstract ResultType min(@Nonnull ResultType v);
-
-    
-  /**
-   * are these two vectors almost the same? they both have the same x and y
-   * values (within epsilon).
-   * 
-   * @param o
-   *          the object to compare for equality
-   * @return true if they are equal
-   */
-  public abstract boolean equalsEpsilon(ResultType v, float epsilon);
+  public abstract float angleBetween(@Nonnull ResultType v);
 
   /**
    * Returns true if this vector is a unit vector (length() ~= 1), returns false
@@ -211,4 +160,178 @@ public abstract class Vector<ResultType extends Vector<ResultType>> {
   }
 
 
+  public final ResultType add(@Nonnull ResultType v) {
+    float[] a = toArray();
+    float[] b = v.toArray();
+    for (int i = 0; i < a.length; ++i) {
+      a[i] += b[i];
+    }
+    return build(a);
+  }
+
+  public final ResultType mult(float scalar) {
+    float[] a = toArray();
+    for (int i = 0; i < a.length; ++i) {
+      a[i] *= scalar;
+    }
+    return build(a);
+  }
+
+  /**
+   * Not marked final as quaternions have a different
+   * idea of the inverse 
+   * @return
+   */
+  public ResultType mult(@Nonnull ResultType v) {
+    float[] a = toArray();
+    float[] b = v.toArray();
+    for (int i = 0; i < a.length; ++i) {
+      a[i] *= b[i];
+    }
+    return build(a);
+  }
+
+  /**
+   * Not marked final as quaternions have a different
+   * idea of the inverse 
+   * @return
+   */
+  public ResultType inverse() {
+    float[] a = toArray();
+    for (int i = 0; i < a.length; ++i) {
+      a[i] = 1f / a[i];
+    }
+    return build(a);
+  }
+
+  
+  public final float dot(@Nonnull ResultType v) {
+    float[] a = toArray();
+    float[] b = v.toArray();
+    float result = 0;
+    for (int i = 0; i < a.length; ++i) {
+      result += a[i] * b[i];
+    }
+    return result;
+  }
+
+  public final ResultType interpolate(@Nonnull ResultType v, float changeAmnt) {
+    float[] a = toArray();
+    float[] b = v.toArray();
+    for (int i = 0; i < a.length; ++i) {
+      a[i] = FastMath.interpolateLinear(changeAmnt, a[i], b[i]);
+    }
+    return build(a);
+  }
+
+
+  /**
+   * <code>maxLocal</code> computes the maximum value for each
+   * component in this and <code>other</code> vector. The result is stored
+   * in this vector.
+   * @param other
+   */
+  public final ResultType max(ResultType v){
+    float[] a = toArray();
+    float[] b = v.toArray();
+    for (int i = 0; i < a.length; ++i) {
+      a[i] = Math.max(a[i], b[i]);
+    }
+    return build(a);
+  }
+
+  /**
+   * <code>minLocal</code> computes the minimum value for each
+   * component in this and <code>other</code> vector. The result is stored
+   * in this vector.
+   * @param other
+   */
+  public final ResultType min(ResultType v){
+    float[] a = toArray();
+    float[] b = v.toArray();
+    for (int i = 0; i < a.length; ++i) {
+      a[i] = Math.min(a[i], b[i]);
+    }
+    return build(a);
+  }
+
+  /**
+   * are these two vectors almost the same? they both have the same x and y
+   * values (within epsilon).
+   * 
+   * @param o
+   *          the object to compare for equality
+   * @return true if they are equal
+   */
+  public final boolean equalsEpsilon(ResultType v, float epsilon) {
+    float[] a = toArray();
+    float[] b = v.toArray();
+    for (int i = 0; i < a.length; ++i) {
+      if (!FastMath.isWithinEpsilon(a[i], b[i], epsilon)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * <code>distanceSquared</code> calculates the distance squared between this
+   * vector and vector v.
+   * 
+   * @param v
+   *          the second vector to determine the distance squared.
+   * @return the distance squared between the two vectors.
+   */
+  public final float distanceSquared(@Nonnull ResultType v) {
+    float[] a = toArray();
+    float[] b = v.toArray();
+    float result = 0;
+    for (int i = 0; i < a.length; ++i) {
+      float f = a[i] - b[i];
+      result += f * f;
+    }
+    return result;
+  }
+
+  /**
+   * <code>lengthSquared</code> calculates the squared value of the magnitude of
+   * the vector.
+   * 
+   * @return the magnitude squared of the vector.
+   */
+  public final float lengthSquared() {
+    float[] a = toArray();
+    float result = 0;
+    for (int i = 0; i < a.length; ++i) {
+      float f = a[i];
+      result += f * f;
+    }
+    return result;
+  }
+
+  public final boolean isValid() {
+    for (float f : toArray()) {
+      if (Float.isNaN(f) || Float.isInfinite(f)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+
+  /**
+   * <code>hashCode</code> returns a unique code for this vector object based on
+   * it's values. If two vectors are logically equivalent, they will return the
+   * same hash code value.
+   * 
+   * @return the hash code value of this vector.
+   */
+  @Override
+  public final int hashCode() {
+    int hash = 37;
+    for (float f : toArray()) {
+      hash += 37 * hash + Float.floatToIntBits(f);
+    }
+    return hash;
+  }
 }
