@@ -12,7 +12,7 @@
 
   <scm>
     <connection>scm:git:https://github.com/jherico/java-math.git</connection>
-    <developerConnection>scm:git:git://github.com/jherico/java-math.git</developerConnection>
+    <developerConnection>scm:git:git@github.com/jherico/java-math.git</developerConnection>
     <url>https://github.com/jherico/java-math</url>
     <tag>HEAD</tag>
   </scm>
