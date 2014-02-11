@@ -7,14 +7,14 @@
   </parent>
 
   <artifactId>math</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.1</version>
   <packaging>jar</packaging>
 
   <scm>
     <connection>scm:git:https://github.com/jherico/java-math.git</connection>
     <developerConnection>scm:git:git://git@github.com/jherico/java-math.git</developerConnection>
     <url>https://github.com/jherico/java-math</url>
-    <tag>HEAD</tag>
+    <tag>math-1.0.1</tag>
   </scm>
 
   <build>
