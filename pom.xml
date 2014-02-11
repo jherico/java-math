@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.saintandreas</groupId>
     <artifactId>saintandreas-parent</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.3-SNAPSHOT</version>
   </parent>
 
   <artifactId>math</artifactId>
@@ -14,7 +14,6 @@
     <connection>scm:git:https://github.com/jherico/java-math.git</connection>
     <developerConnection>scm:git:git@github.com:jherico/java-math.git</developerConnection>
     <url>https://github.com/jherico/java-math</url>
-    <tag>math-1.0.1</tag>
   </scm>
   <build>
     <plugins>
