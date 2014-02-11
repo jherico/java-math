@@ -75,7 +75,16 @@ public final class Vector4f extends Vector4<Vector4f> implements java.io.Seriali
      *
      */
     public Vector4f() {
-      super(0, 0, 0, 0);
+      this(0);
+    }
+
+    /**
+     * Constructor instantiates a new <code>Vector3f</code> with default
+     * values of (0,0,0).
+     *
+     */
+    public Vector4f(float s) {
+      super(s);
     }
 
     /**
@@ -143,6 +152,11 @@ public final class Vector4f extends Vector4<Vector4f> implements java.io.Seriali
     @Override
     protected Vector4f build(float x, float y, float z, float w) {
       return new Vector4f(x,y,z,w);
+    }
+
+    @Override
+    protected Vector4f build(float s) {
+      return new Vector4f(s);
     }
 
 }

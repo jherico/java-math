@@ -82,6 +82,14 @@ final public class FastMath {
       return isWithinEpsilon(a, b, ZERO_TOLERANCE);
     }
 
+    public static boolean isWithinEpsilon(double a, double  b, double  epsilon) {
+      return Math.abs(a - b) <= epsilon;
+    }
+
+    public static boolean isWithinEpsilon(double  a, double  b) {
+      return isWithinEpsilon(a, b, ZERO_TOLERANCE);
+    }
+
     /**
      * Returns true if the number is a power of 2 (2,4,8,16...)
      * 

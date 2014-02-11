@@ -13,6 +13,8 @@ public abstract class Vector<ResultType extends Vector<ResultType>> {
 
   protected abstract ResultType build(float[] v);
 
+  protected abstract ResultType build(float s);
+
   public abstract float[] toArray();
 
   public abstract float angleBetween(@Nonnull ResultType v);
@@ -167,6 +169,18 @@ public abstract class Vector<ResultType extends Vector<ResultType>> {
       a[i] += b[i];
     }
     return build(a);
+  }
+
+  public final ResultType add(@Nonnull float s) {
+    float[] a = toArray();
+    for (int i = 0; i < a.length; ++i) {
+      a[i] += s;
+    }
+    return build(a);
+  }
+
+  public final ResultType subtract(@Nonnull float s) {
+    return add(-s);
   }
 
   public final ResultType mult(float scalar) {

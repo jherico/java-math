@@ -84,7 +84,16 @@ public final class Vector3f extends Vector<Vector3f> implements java.io.Serializ
      *
      */
     public Vector3f() {
-        x = y = z = 0;
+        this(0);
+    }
+
+    /**
+     * Constructor instantiates a new <code>Vector3f</code> with default
+     * values of (0,0,0).
+     *
+     */
+    public Vector3f(float s) {
+        x = y = z = s;
     }
 
     /**
@@ -264,5 +273,10 @@ public final class Vector3f extends Vector<Vector3f> implements java.io.Serializ
     @Override
     protected Vector3f build(float[] v) {
       return new Vector3f(v[0], v[1], v[2]);
+    }
+
+    @Override
+    protected Vector3f build(float s) {
+      return new Vector3f(s);
     }
 }

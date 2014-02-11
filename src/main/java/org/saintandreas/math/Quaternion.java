@@ -642,4 +642,9 @@ public final class Quaternion extends Vector4<Quaternion> implements java.io.Ser
     return new Quaternion(v[0], v[1], v[2], v[3]);
   }
 
+  @Override
+  protected Quaternion build(float s) {
+    return new Quaternion(s, s, s, s);
+  }
+
 }

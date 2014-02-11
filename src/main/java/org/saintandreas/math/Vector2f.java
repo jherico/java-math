@@ -73,6 +73,17 @@ public final class Vector2f extends Vector<Vector2f> implements java.io.Serializ
     this.y = y;
   }
 
+  /**
+   * Creates a Vector2f with the given an initial scalar
+   * 
+   * @param s
+   *          The x and y value of this Vector2f.
+   */
+  public Vector2f(float s) {
+    this.x = s;
+    this.y = s;
+  }
+
   public float getX() {
     return x;
   }
@@ -212,5 +223,10 @@ public final class Vector2f extends Vector<Vector2f> implements java.io.Serializ
   @Override
   protected Vector2f build(float[] v) {
     return new Vector2f(v[0], v[1]);
+  }
+
+  @Override
+  protected Vector2f build(float s) {
+    return new Vector2f(s);
   }
 }

@@ -66,6 +66,24 @@ public abstract class Vector4<ResultType extends Vector4<ResultType>> extends Ve
      */
     public final float w;
 
+    /**
+     * Constructor instantiates a new <code>Vector4f</code> with provides
+     * values.
+     *
+     * @param x
+     *            the x value of the vector.
+     * @param y
+     *            the y value of the vector.
+     * @param z
+     *            the z value of the vector.
+     * @param w
+     *            the w value of the vector.
+     */
+    public Vector4(float s) {
+      x = y= z = w = s;
+    }
+
+
 
     /**
      * Constructor instantiates a new <code>Vector4f</code> with provides
@@ -192,6 +210,11 @@ public abstract class Vector4<ResultType extends Vector4<ResultType>> extends Ve
     @Override
     protected ResultType build(float[] v) {
       return build(v[0], v[1], v[2], v[3]);
+    }
+
+    @Override
+    protected ResultType build(float s) {
+      return build(s);
     }
     
 }
