@@ -8,7 +8,7 @@
   </parent>
 
   <artifactId>math</artifactId>
-  <version>1.0.3</version>
+  <version>1.0.3-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>Saint Andreas Math</name>
@@ -23,7 +23,7 @@
   </licenses>
 
   <scm>
-    <connection>scm:git:https://github.com/jherico/java-math.git</connection>
+    <connection>scm:git:git@github.com:jherico/java-math.git</connection>
     <developerConnection>scm:git:git@github.com:jherico/java-math.git</developerConnection>
     <url>https://github.com/jherico/java-math</url>
   </scm>
